@@ -39,29 +39,29 @@ const projects = [
   },
 ];
 
-// Ultra-Smooth Custom Cubic Bezier Curve
-const ultraSmoothEase = [0.25, 1, 0.5, 1];
+// Ultra-Smooth Cubic-Bezier Curve
+const ultraSmoothEase = [0.16, 1, 0.3, 1];
 
-// Framer Motion Stagger Variants
+// Framer Motion Variants
 const containerVariants = {
   hidden: { opacity: 0 },
   visible: {
     opacity: 1,
     transition: {
-      staggerChildren: 0.1,
-      delayChildren: 0.05,
+      staggerChildren: 0.12,
+      delayChildren: 0.1,
     },
   },
 };
 
-// Optimized Card Variants (removed scale animation during initial scroll to prevent lag)
 const cardVariants = {
-  hidden: { opacity: 0, y: 30 },
+  hidden: { opacity: 0, y: 35, scale: 0.95 },
   visible: {
     opacity: 1,
     y: 0,
+    scale: 1,
     transition: {
-      duration: 0.8,
+      duration: 0.9,
       ease: ultraSmoothEase,
     },
   },
@@ -79,11 +79,11 @@ const SelectedWorks = () => {
       <Container>
         {/* Centered Header Animation */}
         <motion.div
-          initial={{ opacity: 0, y: 30 }}
+          initial={{ opacity: 0, y: 40 }}
           whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: false, amount: 0.2 }}
-          transition={{ duration: 0.8, ease: ultraSmoothEase }}
-          className="flex flex-col items-center text-center max-w-3xl mx-auto mb-20 gap-4 transform-gpu"
+          viewport={{ once: false, amount: 0.25 }}
+          transition={{ duration: 1.0, ease: ultraSmoothEase }}
+          className="flex flex-col items-center text-center max-w-3xl mx-auto mb-20 gap-4"
         >
           <span className="text-xs font-semibold uppercase tracking-[0.25em] text-cyan-400 bg-cyan-500/10 border border-cyan-500/20 px-4 py-1.5 rounded-full">
             Featured Projects
@@ -98,13 +98,13 @@ const SelectedWorks = () => {
           </p>
         </motion.div>
 
-        {/* Animated Cards Grid */}
+        {/* Animated Stagger Cards Grid */}
         <motion.div
           variants={containerVariants}
           initial="hidden"
           whileInView="visible"
-          viewport={{ once: false, amount: 0.1 }}
-          className="grid grid-cols-1 md:grid-cols-2 gap-8"
+          viewport={{ once: false, amount: 0.15 }}
+          className="grid grid-cols-1 md:grid-cols-2 gap-8 perspective-1000"
         >
           {projects.map((project) => {
             const isHovered = hoveredId === project.id;
@@ -115,10 +115,9 @@ const SelectedWorks = () => {
                 variants={cardVariants}
                 onMouseEnter={() => setHoveredId(project.id)}
                 onMouseLeave={() => setHoveredId(null)}
-                // Smooth GPU Accelerated Hover
-                whileHover={{ y: -6 }}
-                transition={{ duration: 0.3, ease: 'easeOut' }}
-                className="group relative bg-[#12131c] rounded-3xl border border-slate-800/80 hover:border-violet-500/40 transition-colors duration-300 overflow-hidden shadow-2xl flex flex-col justify-between transform-gpu will-change-transform"
+                whileHover={{ scale: 1.03, y: -5 }}
+                transition={{ type: 'spring', stiffness: 300, damping: 20 }}
+                className="group relative bg-[#12131c] rounded-3xl border border-slate-800/80 hover:border-violet-500/40 transition-colors duration-500 overflow-hidden shadow-2xl flex flex-col justify-between"
               >
                 {/* Video Area */}
                 <div className="relative aspect-[16/10] overflow-hidden bg-slate-950">
@@ -138,19 +137,13 @@ const SelectedWorks = () => {
                         }
                       }
                     }}
-                    className="w-full h-full object-cover transform-gpu group-hover:scale-105 transition-transform duration-700 ease-out"
+                    className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-1000 ease-out"
                   />
 
-                  {/* Top Badges */}
+                  {/* Category Badge Only */}
                   <div className="absolute top-4 left-4 z-10">
-                    <span className="text-xs font-semibold uppercase tracking-wider bg-[#0d0e12]/80 backdrop-blur-md border border-slate-800 text-cyan-400 px-3 py-1 rounded-full">
+                    <span className="text-xs font-semibold uppercase tracking-wider bg-[#0d0e12]/80 backdrop-blur-md border border-slate-800 text-cyan-400 px-3.5 py-1.5 rounded-full">
                       {project.category}
-                    </span>
-                  </div>
-
-                  <div className="absolute top-4 right-4 z-10">
-                    <span className="font-heading text-sm font-extrabold text-slate-400 bg-[#0d0e12]/80 backdrop-blur-md border border-slate-800 px-3 py-1 rounded-full">
-                      {project.id}
                     </span>
                   </div>
                 </div>
@@ -161,9 +154,13 @@ const SelectedWorks = () => {
                     <h3 className="font-heading text-2xl font-bold text-white group-hover:text-violet-300 transition-colors duration-300">
                       {project.title}
                     </h3>
-                    <span className="text-violet-400 text-xl group-hover:translate-x-1 group-hover:-translate-y-1 transition-transform duration-300">
+                    <motion.span 
+                      whileHover={{ scale: 1.2, rotate: 15 }}
+                      transition={{ type: 'spring', stiffness: 400, damping: 10 }}
+                      className="text-violet-400 text-xl group-hover:translate-x-1 group-hover:-translate-y-1 transition-transform duration-300 cursor-pointer"
+                    >
                       ↗
-                    </span>
+                    </motion.span>
                   </div>
 
                   {/* Software Tags */}

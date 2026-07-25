@@ -24,3 +24,16 @@ body {
   color: var(--foreground);
   font-family: Arial, Helvetica, sans-serif;
 }
+
+
+html {
+  scroll-behavior: smooth;
+  scroll-padding-top: 100px; /* নেভবারের জন্য যাতে কন্টেন্ট কেটে না যায় */
+}
+
+/* স্মুথ এবং ফাস্ট স্ক্রলিং নিশ্চিত করতে */
+@media (prefers-reduced-motion: no-preference) {
+  html {
+    scroll-behavior: smooth;
+  }
+}

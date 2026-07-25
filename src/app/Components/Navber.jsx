@@ -22,11 +22,14 @@ const Navbar = () => {
     return () => window.removeEventListener('scroll', handleScroll);
   }, []);
 
+  // সব সেকশনের সাথে লিঙ্কড Nav Items
   const navLinks = [
-    { name: 'Showreel', href: '#showreel' },
-    { name: 'Works', href: '#works' },
-    { name: 'Services', href: '#services' },
+    { name: 'Home', href: '#hero' },
     { name: 'About', href: '#about' },
+    { name: 'Works', href: '#works' },
+    { name: 'Partners', href: '#clients' },
+    { name: 'FAQ', href: '#faq' },
+    { name: 'Contact', href: '#contact' },
   ];
 
   return (
@@ -40,9 +43,9 @@ const Navbar = () => {
         
         {/* Desktop Navigation (Top Centered Dock Style) */}
         <nav
-          className={`hidden md:flex items-center gap-8 px-7 py-3 rounded-full backdrop-blur-md border transition-all duration-300 shadow-xl ${
+          className={`hidden md:flex items-center gap-7 px-7 py-3 rounded-full backdrop-blur-md border transition-all duration-300 shadow-xl ${
             scrolled
-              ? 'bg-[#0d0e12]/80 border-slate-700/80 shadow-violet-500/10'
+              ? 'bg-[#0d0e12]/85 border-slate-700/80 shadow-violet-500/10'
               : 'bg-slate-900/60 border-slate-800/80'
           }`}
         >
@@ -92,7 +95,7 @@ const Navbar = () => {
         </div>
       </Container>
 
-      {/* Mobile Dropdown Menu (Opens Top to Bottom) */}
+      {/* Mobile Dropdown Menu */}
       <AnimatePresence>
         {isMobileMenuOpen && (
           <motion.div
